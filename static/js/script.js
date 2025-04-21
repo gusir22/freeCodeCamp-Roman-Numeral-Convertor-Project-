@@ -16,8 +16,9 @@ const romanNumerals = [
 
 function convertToRoman(form) {
     let number = form.number.value;
-    let outputMessage; // init empty string
+    let outputMessage = ''; // init empty string
 
+    // validate input, if on flags are triggered then convert to roman numerals
     if (number == '') {
         outputMessage = "Please enter a valid number";
     } else if (number < 1) {
@@ -25,8 +26,14 @@ function convertToRoman(form) {
     } else if (number > 3999) {
         outputMessage = "Please enter a number less than or equal to 3999";
     } else {
-        console.log(number);
-        outputMessage = `${number}`;
+        // check all numeral key/value pairs
+        for (let n=0; n<romanNumerals.length; n++){
+            // keep checking same value until number is less than the current numeral value
+            while (number >= romanNumerals[n].value) {
+                outputMessage += romanNumerals[n].numeral; // save numeral to outputMessage
+                number -= romanNumerals[n].value; // subtract roman numeral value from number
+            }
+        }
     }
 
     document.getElementById('output').innerText = outputMessage;
